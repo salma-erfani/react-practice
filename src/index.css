@@ -1,0 +1,12 @@
+:root {
+	--background: #2B2930;
+	--light-gray: #938F99;
+	--purple: #6b17b9;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
