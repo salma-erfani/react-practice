@@ -1,0 +1,120 @@
+.header {
+    width: 80%;
+    margin: 0 auto;
+    align-items: center;
+    display: flex;
+    padding: 30px 0;
+    color: var(--light-gray);
+}
+
+.header h1 {
+    font-weight: 500;
+    font-size: 24px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+}
+
+.header button:hover {
+    color: #fff;
+}
+
+/* container */
+.main-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 50px;
+}
+
+.tasks-container {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+/* add button */
+button.add {
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid #fff;
+    border-radius: 40px;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+button.add:hover {
+    background-color: var(--very-light-gray);
+    border-color: var(--very-light-gray);
+    color: var(--background);
+}
+
+.plus-icon {
+    font-size: 30px;
+}
+
+/* list */
+.list {
+    width: 90%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+/* list item */
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.list-item:last-of-type {
+    border: none;
+}
+
+.list-item .right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--purple);
+    color: #fff;
+}
+
+.list-item input {
+    accent-color: var(--purple);
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
+}
+
+/* empty tasts */
+
+.empty-tasks {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.empty-icon {
+    font-size: 70px;
+}

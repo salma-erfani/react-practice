@@ -1,0 +1,33 @@
+/* pagination */
+
+.pagination-bar {
+    width: 80%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pagination-item {
+    border-radius: 100%;
+    padding: 6px;
+    cursor: pointer;
+}
+
+.pagination-item:hover {
+    background-color: var(--light-gray);
+    color: var(--background);
+}
+
+.pagination-item.active {
+    background-color: var(--very-light-gray);
+    color: var(--background);
+}
+
+.pagination-icon {
+    cursor: pointer;
+}
+
+.pagination-icon:hover {
+    color: var(--light-gray);
+}

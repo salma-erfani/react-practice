@@ -1,6 +1,7 @@
 :root {
 	--background: #2B2930;
 	--light-gray: #938F99;
+	--very-light-gray: #d8d8d8;
 	--purple: #6b17b9;
 }
 
@@ -8,5 +9,26 @@
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
+}
+
+body {
+	font-size: 18px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+	width: 100vw;
+	height: 100vh;
+	background-color: var(--background);
+	color: #fff;
+}
+
+button {
+	background-color: inherit;
+	color: inherit;
+	font-size: inherit;
+	font-family: inherit;
+	border: none;
+	cursor: pointer;
 }
 
