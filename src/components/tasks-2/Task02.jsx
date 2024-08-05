@@ -1,10 +1,10 @@
 import Header from "./Header"
 import Content from "./Content"
 import Footer from "./Footer"
-import './tasks02.css'
+import './task02.css'
 
 
-const Tasks02 = () => {
+const Task02 = () => {
     return (
         <form className="form-wrap">
             <Header />
@@ -14,4 +14,4 @@ const Tasks02 = () => {
     )
 }
 
-export default Tasks02
+export default Task02
