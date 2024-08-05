@@ -27,13 +27,6 @@ body {
 	font-family: Roboto, sans-serif;
 }
 
-.container {
-	width: 100vw;
-	height: 100vh;
-	background-color: var(--background);
-	color: #fff;
-}
-
 button {
 	background-color: inherit;
 	color: inherit;
