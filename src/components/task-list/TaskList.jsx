@@ -1,19 +1,22 @@
+import { useTask } from "../../store/TaskContext"
 import Pagination from "../utilities/Pagination"
 import EmptyTasks from "./EmptyTasks"
 import TaskListItem from "./TaskListItem"
 
-const TaskList = ({ tasks }) => {
+const TaskList = () => {
+    const { tasks } = useTask()
+
     return (
         <>
             {tasks.length !== 0 &&
                 <div className="list">
                     <ul>
-                        {tasks.map(item => <TaskListItem key={item.id} task={item.task} />)}
+                        {tasks.map(item => <TaskListItem key={item.id} task={item.title} />)}
                     </ul>
-                    {tasks.length >= 6 && <Pagination />}
+                    <Pagination />
                 </div>
             }
-            {tasks.length === 0 && 
+            {tasks.length === 0 &&
                 <EmptyTasks />
             }
         </>
