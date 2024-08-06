@@ -1,9 +1,9 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import Tasks from "./components/tasks/Tasks"
-import Task02 from "./components/tasks-2/Task02"
 import TaskManager from "./components/tasks-2/TaskManager"
 import EditTask from "./components/tasks-2/EditTask"
 import CreateTask from "./components/tasks-2/CreateTask"
+import Layout from "./components/layout/Layout"
 
 const App = () => {
     return (

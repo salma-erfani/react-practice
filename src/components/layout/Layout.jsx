@@ -1,13 +1,13 @@
-import './layout.css'
+import Container from './Container'
 import { Outlet } from "react-router-dom"
-import Content from './Content'
+import './layout.css'
 
 const Layout = () => {
     return (
         <div className="main-container">
-            <Content>
+            <Container>
                 <Outlet />
-            </Content>
+            </Container>
         </div>
     )
 }

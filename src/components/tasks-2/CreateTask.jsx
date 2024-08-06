@@ -10,8 +10,7 @@ import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRig
 const CreateTask = () => {
   return (
     //------------------------------  Create Task
-    <div className="box-container">
-      <form className="form-wrap">
+<>
         <Header
           titleName="Create Task"
           iconR={<KeyboardArrowRightOutlinedIcon />}
@@ -23,8 +22,7 @@ const CreateTask = () => {
           plhBottom="Placeholder"
         />
         <Footer btnName="Create" />
-      </form>
-    </div>
+      </>
   );
 };
 

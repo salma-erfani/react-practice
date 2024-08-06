@@ -1,9 +1,11 @@
+import Button from "../utilities/Button"
+
 const TaskAddButton = () => {
     return (
-        <button className="add">
+        <Button>
             <span className="plus-icon">+</span>
             <span>Task</span>
-        </button>
+        </Button>
     )
 }
 

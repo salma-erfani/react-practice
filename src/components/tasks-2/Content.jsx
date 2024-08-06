@@ -1,9 +1,3 @@
-import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
-
-
 const Content = (props) => {
   return (
     <div className="content-input">
