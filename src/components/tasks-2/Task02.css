@@ -1,3 +1,17 @@
+.form-wrap {
+  background-color: var(--background);
+  border-radius: 28px;
+  padding: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  min-width: 312px;
+  min-height: 543px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
 /* --------------------start Header */
 .icon {
   cursor: pointer;
