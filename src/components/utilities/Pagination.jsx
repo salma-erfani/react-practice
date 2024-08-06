@@ -2,7 +2,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import './utilities.css'
 
-const pages = [13, 14, 15, 16, 17, 18, 19]
+const pages = [13, 14, 15, 16, 17]
 const activePage = 17
 
 const Pagination = () => {

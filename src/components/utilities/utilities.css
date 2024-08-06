@@ -1,7 +1,7 @@
 /* pagination */
 
 .pagination-bar {
-    width: 80%;
+    width: 100%;
     margin: 20px auto;
     display: flex;
     justify-content: space-between;
