@@ -1,8 +1,9 @@
-import Task02 from "./components/task-2/Task02"
+
+import Task02 from "./components/tasks-2/Task02"
 
 const App = () => {
 	return (
-		<div  className="box-container">
+		<div className="box-container">
 			<Task02 />
 		</div>
 	)
