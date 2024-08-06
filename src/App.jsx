@@ -2,6 +2,10 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import Tasks from "./components/tasks/Tasks"
 
 import Task02 from "./components/tasks-2/Task02"
+import TaskManager from "./components/tasks-2/TaskManager"
+import EditTask from "./components/tasks-2/EditTask"
+import CreateTask from "./components/tasks-2/CreateTask"
+
 
 const App = () => {
 	return (
@@ -11,7 +15,9 @@ const App = () => {
 				<Route path="task/list" element={<Tasks />} />
 				{/* <Route path="task/create" /> */}
 				{/* <Route path="task/:id/edit" /> */}
-				{/* <Route path="login" /> */}
+				<Route path="task/taskmanager" element={<TaskManager />}/>
+				<Route path="task/edittask" element={<EditTask />}/>
+				<Route path="task/createtask" element={<CreateTask />}/>
 			</Routes>
 		</BrowserRouter>
 	)
