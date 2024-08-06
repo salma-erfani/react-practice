@@ -1,7 +1,7 @@
 import Header from "./Header"
 import Content from "./Content"
 import Footer from "./Footer"
-import './task02.css'
+import './Task02.css'
 
 
 const Task02 = () => {
