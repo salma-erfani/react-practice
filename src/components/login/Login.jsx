@@ -1,16 +1,14 @@
-import Header from "./Header"
-import Content from "./Content"
-import Footer from "./Footer"
-import "./Task02.css"
+import Header from "../layout/Header"
+import FormContent from "../layout/FormContent"
+import Button from "../utilities/Button"
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined"
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 
-const TaskManager = () => {
+const Login = () => {
     return (
-        //------------------------------  Task Manager
         <>
             <Header titleName="Task Manager" />
-            <Content
+            <FormContent
                 labelTop="username"
                 plhTop="placeholder"
                 labelBottom="password"
@@ -18,9 +16,9 @@ const TaskManager = () => {
                 iconTop={<CancelOutlinedIcon />}
                 iconBottom={<VisibilityOutlinedIcon />}
             />
-            <Footer btnName="Login" />
+            <Button>Login</Button>
         </>
     )
 }
 
-export default TaskManager
+export default Login

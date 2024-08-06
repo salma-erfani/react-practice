@@ -1,6 +1,6 @@
-const Header = (props) => {
+    const Header = (props) => {
     return (
-        <header className="header-form">
+        <header className="header">
             <button className='icon'>{props.iconL}</button>
             <h2>{props.titleName}</h2>
             <button className='icon'>{props.iconR}</button>
