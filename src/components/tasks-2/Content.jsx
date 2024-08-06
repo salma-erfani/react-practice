@@ -1,27 +1,30 @@
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 
-const Content = () => {
+
+const Content = (props) => {
   return (
     <div className="content-input">
       <div className="input-group">
         <div className="text-wrap">
-          <label for="username">name</label>
-          <input type="text" id="username" placeholder="Task #1" />
+          <label for="username">{props.labelTop}</label>
+          <input type="text" id="username" placeholder={props.plhTop} />
         </div>
-        {/* <img src="icons/cancel-icon.svg" className="icon" /> */}
+       
         <button className="btn-content icon">
-          <CancelOutlinedIcon />
+          {props.iconTop}
         </button>
       </div>
       <div className="input-group">
         <div className="text-wrap">
-          <label for="password">priority</label>
-          <input type="password" id="password" placeholder="High" />
+          <label for="password">{props.labelBottom}</label>
+          <input type="password" id="password" placeholder={props.plhBottom} />
         </div>
-        {/* <img src="./icons/eye-icon.svg" className="icon" /> */}
+      
         <button className="btn-content icon">
-          <VisibilityOutlinedIcon />
+          {props.iconBottom}
         </button>
       </div>
     </div>

@@ -2,14 +2,14 @@
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 
-const Header = () => {
+const Header = (props) => {
   return (
     <header className="header-form">
-      {/* <img src="./icons/delete.svg" class="icon" /> */}
-      <button className='icon'>< DeleteOutlinedIcon /></button>
-      <h2>Edit Task #1</h2>
-      {/* <img src="./icons/arrow_right.svg" class="icon" /> */}
-      <button className='icon'><KeyboardArrowRightOutlinedIcon /></button>
+     
+      <button className='icon'>{props.iconL}</button>
+      <h2>{props.titleName}</h2>
+      <button className='icon'>{props.iconR}</button>
+
     </header>
   );
 };
