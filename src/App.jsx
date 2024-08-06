@@ -1,6 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import Tasks from "./components/tasks/Tasks"
 
+import Task02 from "./components/tasks-2/Task02"
+
 const App = () => {
 	return (
 		<BrowserRouter>
