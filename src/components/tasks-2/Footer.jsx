@@ -1,6 +1,6 @@
 const Footer = () => {
     return (
-        <button type="submit">Save</button>
+        <button type="submit" className="btn-footer">Save</button>
     );
   };
   
