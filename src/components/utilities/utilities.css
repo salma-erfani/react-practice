@@ -1,17 +1,22 @@
 /* pagination */
 
 .pagination-bar {
-    width: 100%;
-    margin: 20px auto;
+    margin: 30px auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
 }
 
 .pagination-item {
     border-radius: 100%;
+    width: 30px;
+    height: 30px;
     padding: 6px;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .pagination-item:hover {
@@ -26,10 +31,21 @@
 
 .pagination-icon {
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .pagination-icon:hover {
     color: var(--light-gray);
+}
+
+.pagination-icon.disabled {
+    cursor: not-allowed;
+}
+
+.pagination-icon.disabled:hover {
+    color: inherit;
 }
 
 /* button */
