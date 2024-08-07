@@ -71,6 +71,7 @@
 }
 
 .list-item input {
+    cursor: pointer;
     accent-color: var(--purple);
     width: 20px;
     height: 20px;

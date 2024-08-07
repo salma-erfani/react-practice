@@ -3,20 +3,20 @@ import { createContext, useContext, useReducer } from "react"
 const TaskContext = createContext(null)
 
 const initialTasks = [
-    { id: 1, title: 'task', priority: 'high' },
-    { id: 2, title: 'task', priority: 'high' },
-    { id: 3, title: 'task', priority: 'high' },
-    { id: 4, title: 'task2', priority: 'high' },
-    { id: 5, title: 'task2', priority: 'high' },
-    { id: 6, title: 'task', priority: 'high' },
-    { id: 7, title: 'task', priority: 'high' },
-    { id: 8, title: 'task', priority: 'high' },
-    { id: 9, title: 'task2', priority: 'high' },
-    { id: 10, title: 'task2', priority: 'high' },
-    { id: 11, title: 'task', priority: 'high' },
-    { id: 81, title: 'task', priority: 'high' },
-    { id: 91, title: 'task2', priority: 'high' },
-    { id: 101, title: 'task2', priority: 'high' },
+    { id: 1, title: 'task', priority: 'high', isDone: false },
+    { id: 2, title: 'task', priority: 'high', isDone: false },
+    { id: 3, title: 'task', priority: 'high', isDone: false },
+    { id: 4, title: 'task2', priority: 'high', isDone: false },
+    { id: 5, title: 'task2', priority: 'high', isDone: false },
+    { id: 6, title: 'task', priority: 'high', isDone: false },
+    { id: 7, title: 'task', priority: 'high', isDone: false },
+    { id: 8, title: 'task', priority: 'high', isDone: false },
+    { id: 9, title: 'task2', priority: 'high', isDone: false },
+    { id: 10, title: 'task2', priority: 'high', isDone: false },
+    { id: 11, title: 'task', priority: 'high', isDone: false },
+    { id: 81, title: 'task', priority: 'high', isDone: false },
+    { id: 91, title: 'task2', priority: 'high', isDone: false },
+    { id: 101, title: 'task2', priority: 'high', isDone: false },
 ]
 
 const reducer = (state, action) => {
@@ -36,6 +36,13 @@ const reducer = (state, action) => {
         finalTasks[taskIdx] = { ...action.task }
         return finalTasks
     }
+    else if (action.type === 'toggle-status') {
+        let taskIdx = state.findIndex(item => item.id === action.taskId)
+        const modifiedTask = { ...state[taskIdx], isDone: !state[taskIdx].isDone }
+        let finalTasks = [...state]
+        finalTasks[taskIdx] = modifiedTask
+        return finalTasks
+    }
     return initialTasks
 }
 
@@ -52,6 +59,10 @@ export const TaskProvider = ({ children }) => {
 
     const editTask = (task) => {
         dispatch({ type: 'edit', task: task })
+    }
+
+    const toggleTaskStatus = (taskId) => {
+        dispatch({ type: 'toggle-status', taskId: taskId })
     }
 
     const getTask = (taskId) => {
@@ -73,6 +84,7 @@ export const TaskProvider = ({ children }) => {
             addTask,
             removeTask,
             editTask,
+            toggleTaskStatus,
             getTask,
             getTasksByPage,
             getNumberOfPages
