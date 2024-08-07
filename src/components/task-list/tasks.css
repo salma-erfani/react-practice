@@ -76,6 +76,13 @@
     height: 20px;
 }
 
+/* task filter */
+
+.task-filter {
+    display: flex;
+    justify-content: end;
+}
+
 /* empty tasts */
 
 .empty-tasks {

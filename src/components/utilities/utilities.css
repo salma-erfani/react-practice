@@ -67,3 +67,18 @@
 .button:hover {
     background-color: #3d3d3d9c;
 }
+
+/* icon button */
+
+.icon-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+    border-radius: 100%;
+}
+
+.icon-button:hover {
+    background-color: var(--light-gray);
+    color: var(--background);
+}

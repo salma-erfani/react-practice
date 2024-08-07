@@ -4,6 +4,7 @@ import Pagination from "../utilities/Pagination"
 import EmptyTasks from "./EmptyTasks"
 import TaskListItem from "./TaskListItem"
 import { usePagination } from "../../hooks/usePagination"
+import TaskFilter from "./TaskFilter"
 
 const TaskList = () => {
     const { getTasksByPage, getNumberOfPages } = useTask()
@@ -32,6 +33,7 @@ const TaskList = () => {
         <>
             {tasks.length !== 0 &&
                 <div className="list">
+                    <TaskFilter />
                     <ul>
                         {tasks.map(item => <TaskListItem key={item.id} task={item} />)}
                     </ul>

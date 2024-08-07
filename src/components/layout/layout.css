@@ -13,7 +13,7 @@
     height: 543px;
     background-color: var(--background);
     border-radius: 28px;
-    padding: 40px;
+    padding: 30px 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     text-align: center;
     display: flex;
