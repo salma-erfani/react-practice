@@ -18,7 +18,7 @@ const LoginForm = (props) => {
 
   return (
     <div className="content-input">
-//username input--------------------
+{/* //username input-------------------- */}
       <div className="input-group">
         <div className="text-wrap">
           <label for="username">{props.labelTop}</label>
@@ -31,12 +31,12 @@ const LoginForm = (props) => {
             onChange={(e) => props.setUsername(e.target.value)}
           />
         </div>
-//cancel icon--------------------
+{/* //cancel icon-------------------- */}
         <button className="btn-content icon" onClick={handleClearUsername}>
           {props.iconTop}
         </button>
       </div>
-//password input--------------------
+{/* //password input-------------------- */}
       <div className="input-group">
         <div className="text-wrap">
           <label for="password">{props.labelBottom}</label>
@@ -49,7 +49,7 @@ const LoginForm = (props) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
- //Visibility icon--------------------
+ {/* //Visibility icon-------------------- */}
         <button
           className="btn-content icon"
           onMouseDown={handleMouseDown}
