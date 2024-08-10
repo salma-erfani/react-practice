@@ -1,9 +1,8 @@
 import Header from "../layout/Header"
-import FormContent from "../layout/FormContent"
 import Button from "../utilities/Button"
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined"
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 const Login = () => {
 
@@ -18,7 +17,7 @@ const Login = () => {
     return (
         <>
             <Header titleName="Task Manager" />
-            <FormContent
+            <LoginForm
                 username={username}
                 setUsername={setUsername}
                 labelTop="username"
