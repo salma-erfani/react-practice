@@ -6,11 +6,13 @@ import EditTask from "./components/edit-task/EditTask"
 import CreateTask from "./components/create-task/CreateTask"
 
 const App = () => {
+    const username = localStorage.getItem('username')
+
     return (
         <BrowserRouter>
             <Routes>
                 <Route element={<Layout />}>
-                    <Route path="/" element={<Navigate to='/task/list' replace />} />
+                    <Route path="/" element={username ? <Navigate to='/task/list' replace /> : <Navigate to='/login' replace />} />
                     <Route path="login" element={<Login />} />
                     <Route path="task/list" element={<Tasks />} />
                     <Route path="task/:id/edit" element={<EditTask />} />
