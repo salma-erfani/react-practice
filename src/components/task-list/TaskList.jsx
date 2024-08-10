@@ -36,7 +36,7 @@ const TaskList = () => {
     let content = ''
 
     if (loading) {
-        return <p>loading...</p>
+        // return <p>loading...</p>
     }
 
     else if (tasks) {

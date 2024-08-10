@@ -1,18 +1,16 @@
 import useApi from "../useApi"
 
-export const useAddTask = () => {
+export const useGetTask = () => {
     const { response, loading, error, executeRequest } = useApi()
 
-    const addTask = (task) => {
+    const getTask = (id) => {
         executeRequest({
-            url: 'tasks/records',
-            method: 'POST',
-            data: task
+            url: `tasks/records/${id}`
         })
     }
 
     return {
-        addTask,
+        getTask,
         response,
         loading,
         error
