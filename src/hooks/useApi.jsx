@@ -15,7 +15,7 @@ const useApi = (initialConfig = {}) => {
     const [code, setCode] = useState(null)
 
     const axiosInstance = axios.create({
-        baseURL: 'http://127.0.0.1:8090/api/collections/',
+        baseURL: 'https://drew-bone.pockethost.io/api/collections'
     })
 
     const fetchData = async () => {
