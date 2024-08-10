@@ -3,12 +3,24 @@ import FormContent from "../layout/FormContent"
 import Button from "../utilities/Button"
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined"
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
+import { useEffect, useState } from "react"
 
 const Login = () => {
+
+    const [username, setUsername] = useState('');
+
+    const passUsername = () => {
+        localStorage.setItem('username', username)
+      };
+
+      
+    
     return (
         <>
             <Header titleName="Task Manager" />
             <FormContent
+                username={username}
+                setUsername={setUsername}
                 labelTop="username"
                 plhTop="placeholder"
                 labelBottom="password"
@@ -16,7 +28,7 @@ const Login = () => {
                 iconTop={<CancelOutlinedIcon />}
                 iconBottom={<VisibilityOutlinedIcon />}
             />
-            <Button>Login</Button>
+            <Button onClick={passUsername}>Login</Button>
         </>
     )
 }
