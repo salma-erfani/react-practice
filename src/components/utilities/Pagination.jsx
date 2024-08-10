@@ -19,9 +19,9 @@ const Pagination = ({ paginationProps }) => {
         pagesNum
     } = paginationProps
 
-    // fix this, only works for page size capacity 3
+
     let showPages = []
-    const capacity = 3
+    const capacity = Math.min(3, pagesNum)
     if (activePage === 1) {
         showPages = range(1, capacity)
     }
@@ -42,7 +42,7 @@ const Pagination = ({ paginationProps }) => {
             >
                 <ArrowBackIosNewIcon />
             </button>
-            {activePage >= pagesNum - 1 && <span>...</span>}
+            {activePage >= pagesNum - 1 && showPages[0] !== 1 && <span>...</span>}
             {showPages.map(page =>
                 <button
                     key={page}
