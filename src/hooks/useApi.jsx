@@ -15,7 +15,7 @@ const useApi = (initialConfig = {}) => {
     const [code, setCode] = useState(null)
 
     const axiosInstance = axios.create({
-        baseURL: 'https://drew-bone.pockethost.io/api/collections'
+        baseURL: 'https://task-manager-app.pockethost.io/api/collections'
     })
 
     const fetchData = async () => {
