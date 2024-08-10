@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react"
-import { useTask } from "../../store/TaskContext"
 import Pagination from "../utilities/Pagination"
 import EmptyTasks from "./EmptyTasks"
 import TaskListItem from "./TaskListItem"
 import { usePagination } from "../../hooks/usePagination"
+import { useFetchTasks } from "../../hooks/data/useFetchTasks"
 
 const TaskList = () => {
-    const { getTasksByPage, getNumberOfPages } = useTask()
     const [tasks, setTasks] = useState([])
+    const { response, loading, error, getTasksByPage } = useFetchTasks()
+
+    // pagination
     const [numberOfPages, setNumberOfPages] = useState(1)
     const pageSize = 3
     const { page, onNextPage, onPreviousPage, onSetPage } = usePagination({ initialPage: 1, pagesNum: numberOfPages })
@@ -21,28 +23,41 @@ const TaskList = () => {
     }
 
     useEffect(() => {
-        setTasks(getTasksByPage(page, pageSize))
-    }, [page, pageSize])
+        getTasksByPage(page, pageSize)
+    }, [page])
 
     useEffect(() => {
-        setNumberOfPages(getNumberOfPages(pageSize))
-    }, [pageSize])
+        if (response) {
+            setTasks(response.items)
+            setNumberOfPages(response.totalPages)
+        }
+    }, [response])
 
-    return (
-        <>
-            {tasks.length !== 0 &&
-                <div className="list">
-                    <ul>
-                        {tasks.map(item => <TaskListItem key={item.id} task={item} />)}
-                    </ul>
-                    <Pagination paginationProps={paginationProps} />
-                </div>
-            }
-            {tasks.length === 0 &&
-                <EmptyTasks />
-            }
-        </>
-    )
+    let content = ''
+
+    if (loading) {
+        return <p>loading...</p>
+    }
+
+    else if (tasks) {
+        content = (
+            <>
+                {tasks.length !== 0 &&
+                    <div className="list">
+                        <ul>
+                            {tasks.map(item => <TaskListItem key={item.id} task={item} />)}
+                        </ul>
+                        <Pagination paginationProps={paginationProps} />
+                    </div>
+                }
+                {tasks.length === 0 &&
+                    <EmptyTasks />
+                }
+            </>
+        )
+    }
+
+    return content
 }
 
 export default TaskList

@@ -1,14 +1,17 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { useTask } from "../../store/TaskContext"
+import { useUpdateTask } from "../../hooks/data/useUpdateTask"
 
 const TaskListItem = ({ task }) => {
     const [checked, setChecked] = useState(task.isDone)
-    const { toggleTaskStatus } = useTask()
+
+    const { response, loading, error, updateTask } = useUpdateTask()
 
     const handleClickCheckbox = () => {
         setChecked(prev => !prev)
-        toggleTaskStatus(task.id)
+
+        const data = { isDone: !task.isDone }
+        updateTask(task.id, data)
     }
 
     return (
