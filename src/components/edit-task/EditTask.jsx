@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom"
 import { useGetTask } from "../../hooks/data/useGetTask"
 import { useUpdateTask } from "../../hooks/data/useUpdateTask"
 import EditForm from "./EditForm"
+import { useDeleteTask } from "../../hooks/data/useDeleteTask"
 
 const EditTask = () => {
     const { id } = useParams()
@@ -18,6 +19,8 @@ const EditTask = () => {
     // api
     const { response: updateResponse, loading: updateLoading, error: updateError, updateTask } = useUpdateTask()
     const { response: getResponse, loading: getLoading, error: getError, getTask } = useGetTask()
+    const { code: deleteCode, loading: deleteLoading, error: deleteError, deleteTask } = useDeleteTask()
+ 
 
     // fetch task
     useEffect(() => {
@@ -45,11 +48,22 @@ const EditTask = () => {
         }
     }, [updateResponse])
 
+    const handleDelete = () => {
+        deleteTask(id)
+    }
+
+    useEffect(() => {
+        if (deleteCode === 204) {
+            navigate('/task/list')
+        }
+    }, [deleteCode])
+
     return (
         <>
             <Header
                 titleName="Edit Task #1"
                 iconL={<DeleteOutlinedIcon />}
+                onClickIconL={handleDelete}
                 iconR={<Link to={"/task/list"}><KeyboardArrowRightOutlinedIcon /></Link>}
             />
             <EditForm

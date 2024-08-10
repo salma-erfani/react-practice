@@ -1,7 +1,7 @@
 import useApi from "../useApi"
 
 export const useDeleteTask = () => {
-    const { response, loading, error, executeRequest } = useApi()
+    const { code, loading, error, executeRequest } = useApi()
 
     const deleteTask = (id) => {
         executeRequest({
@@ -12,7 +12,7 @@ export const useDeleteTask = () => {
 
     return {
         deleteTask,
-        response,
+        code,
         loading,
         error
     }

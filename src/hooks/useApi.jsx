@@ -12,6 +12,7 @@ const useApi = (initialConfig = {}) => {
     const [response, setResponse] = useState(null)
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [code, setCode] = useState(null)
 
     const axiosInstance = axios.create({
         baseURL: 'http://127.0.0.1:8090/api/collections/',
@@ -48,6 +49,7 @@ const useApi = (initialConfig = {}) => {
 
             setResponse(result.data)
             setError(null)
+            setCode(result.status)
         }
         catch (err) {
             setError(err)
@@ -69,7 +71,7 @@ const useApi = (initialConfig = {}) => {
     }
 
 
-    return { response, error, loading, executeRequest }
+    return { response, error, loading, executeRequest, code }
 }
 
 export default useApi
