@@ -5,76 +5,111 @@ import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRig
 import { Link, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { useGetTask } from "../../hooks/data/useGetTask"
-import { useUpdateTask } from "../../hooks/data/useUpdateTask"
 import EditForm from "./EditForm"
-import { useDeleteTask } from "../../hooks/data/useDeleteTask"
+import { useDispatch } from "react-redux"
+import { deleteTask, fetchTaskById, updateTask } from "../../store/slices/taskSlice"
+import Spinner from "../utilities/Spinner"
+import PageSpinner from "../utilities/PageSpinner"
 
 const EditTask = () => {
     const { id } = useParams()
+    const navigate = useNavigate()
+    const [task, setTask] = useState(null)
     const [title, setTitle] = useState('')
     const [priority, setPriority] = useState('')  // low, medium, high
-    const navigate = useNavigate()
 
-    // api
-    const { response: updateResponse, loading: updateLoading, error: updateError, updateTask } = useUpdateTask()
-    const { response: getResponse, loading: getLoading, error: getError, getTask } = useGetTask()
-    const { code: deleteCode, loading: deleteLoading, error: deleteError, deleteTask } = useDeleteTask()
- 
+    const dispatch = useDispatch()
+    const [fetchStatus, setFetchStatus] = useState('idle')  // can be pending, success, failed
+    const [fetchError, setFetchError] = useState(null)
+    const [updateStatus, setUpdateStatus] = useState('idle')  // can be pending or idle
+    const [deleteStatus, setDeleteStatus] = useState('idle')  // can be pending or idle
 
-    // fetch task
+
     useEffect(() => {
-        getTask(id)
+        const fetchTask = async () => {
+            setFetchStatus('pending')
+            const data = await dispatch(fetchTaskById(id)).unwrap()
+            if (data.code) {
+                setFetchStatus('failed')
+                setFetchError(data.message)
+            }
+            else {
+                setTitle(data.title)
+                setPriority(data.priority)
+                setTask(data)
+                setFetchStatus('success')
+            }
+        }
+
+        fetchTask()
     }, [])
 
-    useEffect(() => {
-        if (getResponse) {
-            setTitle(getResponse.title)
-            setPriority(getResponse.priority)
+    const onClick = async () => {
+        let updatedTask = { id }
+        if (title !== task.title) {
+            updatedTask = { ...updatedTask, title }
         }
-    }, [getResponse])
-
-    const onClick = () => {
-        const task = {
-            title: title,
-            priority: priority
+        if (priority !== task.priority) {
+            updatedTask = { ...updatedTask, priority }
         }
-        updateTask(id, task)
-    }
 
-    useEffect(() => {
-        if (updateResponse) {
+        setUpdateStatus('pending')
+        const data = await dispatch(updateTask(updatedTask)).unwrap()
+        if (data.code) {
+            console.log('error updaing task:', data.message)
+        }
+        else {
             navigate('/task/list')
         }
-    }, [updateResponse])
-
-    const handleDelete = () => {
-        deleteTask(id)
+        setUpdateStatus('idle')
     }
 
-    useEffect(() => {
-        if (deleteCode === 204) {
-            navigate('/task/list')
+    const handleDelete = async () => {
+        setDeleteStatus('pending')
+        const data = await dispatch(deleteTask(2)).unwrap()
+        console.log(data)
+        if (data.code) {
+            console.log('error deleting task:', data.message)
         }
-    }, [deleteCode])
+        navigate('/task/list')
+        setUpdateStatus('idle')
+    }
 
-    return (
-        <>
-            <Header
-                titleName="Edit Task #1"
-                iconL={<DeleteOutlinedIcon />}
-                onClickIconL={handleDelete}
-                iconR={<Link to={"/task/list"}><KeyboardArrowRightOutlinedIcon /></Link>}
-            />
-            <EditForm
-                title={title}
-                onChangeTitle={e => setTitle(e.target.value)}
-                priority={priority}
-                onChangePriority={e => setPriority(e.target.value)}
-            />
-            <Button onClick={onClick}>Save</Button>
-        </>
-    )
+
+    const saveButtonContent = updateStatus === 'idle' ? 'Save' : <Spinner />
+    const deleteButtonContent = deleteStatus === 'idle' ? <DeleteOutlinedIcon /> : <Spinner />
+
+    let content = ''
+
+    if (fetchStatus === 'pending') {
+        content = <PageSpinner />
+    }
+
+    else if (fetchStatus === 'success') {
+        content = (
+            <>
+                <Header
+                    titleName={`Edit ${title}`}
+                    iconL={deleteButtonContent}
+                    onClickIconL={handleDelete}
+                    iconR={<Link to={"/task/list"}><KeyboardArrowRightOutlinedIcon /></Link>}
+                />
+                <EditForm
+                    title={title}
+                    onChangeTitle={e => setTitle(e.target.value)}
+                    priority={priority}
+                    onChangePriority={e => setPriority(e.target.value)}
+                />
+                <Button onClick={onClick}>{saveButtonContent}</Button>
+            </>
+        )
+    }
+
+    else if (fetchStatus === 'failed') {
+        content = <p>Error: {fetchError}</p>
+    }
+
+    return content
 }
 
 export default EditTask

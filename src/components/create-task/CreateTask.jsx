@@ -1,34 +1,39 @@
 import Header from "../layout/Header"
-import FormContent from "../layout/FormContent"
 import Button from "../utilities/Button"
 import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined"
 import CreateForm from "./CreateForm"
-import { useEffect, useState } from "react"
-import { useAddTask } from "../../hooks/data/useAddTask"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { createTask } from "../../store/slices/taskSlice"
+import Spinner from "../utilities/Spinner"
 
 const CreateTask = () => {
-    const [title, setTitle] = useState('')
-    const [priority, setPriority] = useState('')  // low, medium, high
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const [title, setTitle] = useState('')
+    const [priority, setPriority] = useState('')
+    const [requestStatus, setRequestStatus] = useState('idle')  // can be pending or idle
 
-    // api
-    const { response, loading, error, addTask } = useAddTask()
-
-    const onClick = () => {
+    const onClick = async () => {
         const task = {
             title: title,
             priority: priority,
             isDone: false
         }
-        addTask(task)
-    }
 
-    useEffect(() => {
-        if (response) {
+        setRequestStatus('pending')
+        const data = await dispatch(createTask(task)).unwrap()
+        if (data.code) {
+            console.log('error creating task:', data.message)
+        }
+        else {
             navigate('/task/list')
         }
-    }, [response])
+        setRequestStatus('idle')
+    }
+
+    const buttonContent = requestStatus === 'idle' ? 'Create' : <Spinner />
 
     return (
         <>
@@ -43,7 +48,7 @@ const CreateTask = () => {
                 priority={priority}
                 onChangePriority={e => setPriority(e.target.value)}
             />
-            <Button onClick={onClick}>Create</Button>
+            <Button onClick={onClick}>{buttonContent}</Button>
         </>
     )
 }

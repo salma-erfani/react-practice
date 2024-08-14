@@ -1,45 +1,42 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import Pagination from "../utilities/Pagination"
 import EmptyTasks from "./EmptyTasks"
 import TaskListItem from "./TaskListItem"
 import { usePagination } from "../../hooks/usePagination"
-import { useFetchTasks } from "../../hooks/data/useFetchTasks"
+import { useDispatch, useSelector } from "react-redux"
+import { fetchTasks, selectError, selectStatus, selectTasks, selectTotalPages } from "../../store/slices/taskSlice"
+import PageSpinner from "../utilities/PageSpinner"
 
 const TaskList = () => {
-    const [tasks, setTasks] = useState([])
-    const { response, loading, error, getTasksByPage } = useFetchTasks()
+    const dispatch = useDispatch()
+    const tasks = useSelector(selectTasks)
+    const status = useSelector(selectStatus)
+    const totalPages = useSelector(selectTotalPages)
+    const error = useSelector(selectError)
 
     // pagination
-    const [numberOfPages, setNumberOfPages] = useState(1)
     const pageSize = 3
-    const { page, onNextPage, onPreviousPage, onSetPage } = usePagination({ initialPage: 1, pagesNum: numberOfPages })
+    const { page, onNextPage, onPreviousPage, onSetPage } = usePagination({ initialPage: 1, pagesNum: totalPages })
 
     const paginationProps = {
         activePage: page,
-        pagesNum: numberOfPages,
+        pagesNum: totalPages,
         onNextPage,
         onPreviousPage,
         onSetPage,
     }
 
     useEffect(() => {
-        getTasksByPage(page, pageSize)
-    }, [page])
-
-    useEffect(() => {
-        if (response) {
-            setTasks(response.items)
-            setNumberOfPages(response.totalPages)
-        }
-    }, [response])
+        dispatch(fetchTasks({ page, perPage: pageSize }))
+    }, [page, pageSize])
 
     let content = ''
 
-    if (loading) {
-        return <p>loading...</p>
+    if (status === 'pending') {
+        content = <PageSpinner />
     }
 
-    else if (tasks) {
+    else if (status === 'success') {
         content = (
             <>
                 {tasks.length !== 0 &&
@@ -55,6 +52,10 @@ const TaskList = () => {
                 }
             </>
         )
+    }
+
+    else if (status === 'failed') {
+        content = <p>Error: {error}</p>
     }
 
     return content
