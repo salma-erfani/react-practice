@@ -67,3 +67,33 @@
 .button:hover {
     background-color: #3d3d3d9c;
 }
+
+/* spinner */
+.spinner {
+    border: 2px solid var(--light-gray);
+    border-radius: 50%;
+    border-top: 2px solid var(--light-purple);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* page spinner */
+.page-spinner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    color: var(--very-light-gray);
+}
