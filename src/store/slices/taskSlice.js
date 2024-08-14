@@ -1,18 +1,24 @@
 import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit"
 
-const baseURL = 'https://task-manager-app.pockethost.io/api/collections'
+const baseURL = 'https://task-manager-app.pockethost.io/api/collections/'
 
 const initialState = {
-    tasks: [],
+    items: [],
+    totalPages: 1,
     status: 'idle',  // can be idle, pending, success, failed
     error: null
 }
 
 export const fetchTasks = createAsyncThunk(
     'tasks/fetchTasks',
-    async (page, perPage) => {
+    async ({ page, perPage }) => {
         const response = await fetch(baseURL + `tasks/records?page=${page}&perPage=${perPage}`)
-        return response.data
+        const data = await response.json()
+        // check for error
+        if (data.code) {
+            throw new Error('error fetching tasks: ' + data.message)
+        }
+        return data
     }
 )
 
@@ -26,7 +32,8 @@ export const createTask = createAsyncThunk(
             },
             body: JSON.stringify(task)
         })
-        return response.data
+        const data = await response.json()
+        return data
     }
 )
 
@@ -41,7 +48,8 @@ export const updateTask = createAsyncThunk(
             },
             body: JSON.stringify(task)
         })
-        return response.data
+        const data = await response.json()
+        return data
     }
 )
 
@@ -51,7 +59,18 @@ export const deleteTask = createAsyncThunk(
         const response = await fetch(baseURL + `tasks/records/${id}`, {
             method: 'DELETE'
         })
-        return response.data
+        const data = await response.json()
+        return data
+    }
+)
+
+
+export const fetchTaskById = createAsyncThunk(
+    'tasks/fetchTaskById',
+    async (id) => {
+        const response = await fetch(baseURL + `tasks/records/${id}`)
+        const data = await response.json()
+        return data
     }
 )
 
@@ -62,7 +81,7 @@ const taskSlice = createSlice({
     reducers: {
         taskCreated: {
             reducer(state, action) {  // payload contains title, priority, and isDone
-                state.tasks.unshift(action.payload)
+                state.items.unshift(action.payload)
             },
             prepare(title, priority, isDone) {
                 return {
@@ -77,7 +96,7 @@ const taskSlice = createSlice({
         },
         taskUpdated: (state, action) => {
             const { id, title, priority, isDone } = action.payload
-            const existingTask = state.tasks.find(item => item.id === id)
+            const existingTask = state.items.find(item => item.id === id)
             if (existingTask) {
                 existingTask.title = title
                 existingTask.priority = priority
@@ -86,9 +105,9 @@ const taskSlice = createSlice({
         },
         taskRemoved: (state, action) => {
             const { id } = action.payload
-            const taskIndex = state.tasks.findIndex(item => item.id === id)
+            const taskIndex = state.items.findIndex(item => item.id === id)
             if (taskIndex !== -1) {
-                state.tasks.splice(taskIndex, 1)
+                state.items.splice(taskIndex, 1)
             }
         }
     },
@@ -99,50 +118,35 @@ const taskSlice = createSlice({
             })
             .addCase(fetchTasks.fulfilled, (state, action) => {
                 state.status = 'success'
-                state.tasks = action.payload
+                state.items = action.payload.items
+                state.totalPages = action.payload.totalPages
             })
             .addCase(fetchTasks.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.error.message || 'unknown error fetching tasks'
             })
-            .addCase(createTask.pending, (state, action) => {
-                state.status = 'pending'
-            })
             .addCase(createTask.fulfilled, (state, action) => {
                 state.status = 'success'
-                state.tasks.unshift(action.payload)
-            })
-            .addCase(createTask.rejected, (state, action) => {
-                state.status = 'failed'
-                state.error = action.error.message || 'unknown error creating task'
-            })
-            .addCase(updateTask.pending, (state, action) => {
-                state.status = 'pending'
+                state.items.unshift(action.payload)
             })
             .addCase(updateTask.fulfilled, (state, action) => {
                 state.status = 'success'
                 const { id } = action.payload
-                const taskIndex = state.tasks.findIndex(item => item.id === id)
-                state.tasks[taskIndex] = action.payload
-            })
-            .addCase(updateTask.rejected, (state, action) => {
-                state.status = 'failed'
-                state.error = action.error.message || 'unknown error updating task'
-            })
-            .addCase(deleteTask.pending, (state, action) => {
-                state.status = 'pending'
+                const taskIndex = state.items.findIndex(item => item.id === id)
+                state.items[taskIndex] = action.payload
             })
             .addCase(deleteTask.fulfilled, (state, action) => {
                 state.status = 'success'
                 const { id } = action.payload
-                const taskIndex = state.tasks.findIndex(item => item.id === id)
-                state.tasks.splice(taskIndex, 1)
-            })
-            .addCase(deleteTask.rejected, (state, action) => {
-                state.status = 'failed'
-                state.error = action.error.message || 'unknown error deleting task'
+                const taskIndex = state.items.findIndex(item => item.id === id)
+                state.items.splice(taskIndex, 1)
             })
     }
 })
+
+export const selectTasks = state => state.tasks.items
+export const selectTotalPages = state => state.tasks.totalPages
+export const selectStatus = state => state.tasks.status
+export const selectError = state => state.tasks.error
 
 export default taskSlice.reducer
