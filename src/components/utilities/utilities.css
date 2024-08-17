@@ -97,3 +97,36 @@
     gap: 20px;
     color: var(--very-light-gray);
 }
+
+/* message */
+.message {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    border-radius: 30px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    width: 300px;
+    height: 70px;
+    padding: 25px;
+    position: absolute;
+    bottom: 20px;
+    left: -300px;
+    transition: all .5s;
+    background-color: #1c81af;
+}
+
+.message.show {
+    left: 20px;
+}
+
+.message.success {
+    background-color: var(--purple);
+}
+
+.message.error {
+    background-color: #e03b3b;
+}
+
+.message span {
+    width: 100%;
+}

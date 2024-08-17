@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux"
 import { deleteTask, fetchTaskById, updateTask } from "../../store/slices/taskSlice"
 import Spinner from "../utilities/Spinner"
 import PageSpinner from "../utilities/PageSpinner"
+import { showMessage } from "../../store/slices/messageSlice"
 
 const EditTask = () => {
     const { id } = useParams()
@@ -21,13 +22,13 @@ const EditTask = () => {
     const dispatch = useDispatch()
     const [fetchStatus, setFetchStatus] = useState('idle')  // can be pending, success, failed
     const [fetchError, setFetchError] = useState(null)
-    const [updateStatus, setUpdateStatus] = useState('idle')  // can be pending or idle
-    const [deleteStatus, setDeleteStatus] = useState('idle')  // can be pending or idle
+    const [isUpdating, setIsUpdating] = useState(false) 
+    const [isDeleting, setIsDeleting] = useState(false) 
 
 
     useEffect(() => {
         const fetchTask = async () => {
-            setFetchStatus('pending')
+            setFetchStatus(true)
             const data = await dispatch(fetchTaskById(id)).unwrap()
             if (data.code) {
                 setFetchStatus('failed')
@@ -45,6 +46,11 @@ const EditTask = () => {
     }, [])
 
     const onClick = async () => {
+        if (title.trim() === '' || priority === '') {
+            dispatch(showMessage('Please fill in all the fields.', 'error'))
+            return
+        }
+
         let updatedTask = { id }
         if (title !== task.title) {
             updatedTask = { ...updatedTask, title }
@@ -53,35 +59,43 @@ const EditTask = () => {
             updatedTask = { ...updatedTask, priority }
         }
 
-        setUpdateStatus('pending')
-        const data = await dispatch(updateTask(updatedTask)).unwrap()
-        if (data.code) {
-            console.log('error updaing task:', data.message)
-        }
-        else {
+        setIsUpdating(true)
+        try {
+            const data = await dispatch(updateTask(updatedTask)).unwrap()
+            if (data.code) {
+                throw new Error("something went wrong.")
+            }
+            dispatch(showMessage('Your task was updated successfully.', 'success'))
             navigate('/task/list')
         }
-        setUpdateStatus('idle')
+        catch (e) {
+            dispatch(showMessage('There was an error updating your task.', 'error'))
+        }
+        finally {
+            setIsUpdating(false)
+        }
     }
 
     const handleDelete = async () => {
-        setDeleteStatus('pending')
-        const data = await dispatch(deleteTask(2)).unwrap()
-        console.log(data)
+        setIsDeleting(true)
+        const data = await dispatch(deleteTask(id)).unwrap()
         if (data.code) {
-            console.log('error deleting task:', data.message)
+            dispatch(showMessage('There was an error deleting your task.', 'error'))
         }
-        navigate('/task/list')
-        setUpdateStatus('idle')
+        else {
+            dispatch(showMessage('Your task was deleted successfully.', 'success'))
+            navigate('/task/list')
+        }
+        setIsDeleting(false)
     }
 
 
-    const saveButtonContent = updateStatus === 'idle' ? 'Save' : <Spinner />
-    const deleteButtonContent = deleteStatus === 'idle' ? <DeleteOutlinedIcon /> : <Spinner />
+    const saveButtonContent = !isUpdating ? 'Save' : <Spinner />
+    const deleteButtonContent = !isDeleting ? <DeleteOutlinedIcon /> : <Spinner />
 
     let content = ''
 
-    if (fetchStatus === 'pending') {
+    if (fetchStatus === true) {
         content = <PageSpinner />
     }
 

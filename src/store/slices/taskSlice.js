@@ -17,7 +17,14 @@ const apiCall = async (endpoint, method = 'GET', body = null) => {
     }
 
     const response = await fetch(baseURL + endpoint, options)
-    const data = await response.json()
+    let data
+    if (method !== 'DELETE') {
+        data = await response.json()
+    }
+    else {
+        data = response
+        console.log(data)
+    }
     if (data.code) {
         throw new Error('API error: ' + data.message)
     }

@@ -7,33 +7,39 @@ import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { createTask } from "../../store/slices/taskSlice"
 import Spinner from "../utilities/Spinner"
+import { showMessage } from "../../store/slices/messageSlice"
 
 const CreateTask = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [title, setTitle] = useState('')
     const [priority, setPriority] = useState('')
-    const [requestStatus, setRequestStatus] = useState('idle')  // can be pending or idle
+    const [isLoading, setIsLoading] = useState(false)
 
     const onClick = async () => {
+        if (title.trim() === '' || priority === '') {
+            dispatch(showMessage('Please fill in all the fields.', 'error'))
+            return
+        }
         const task = {
             title: title,
             priority: priority,
             isDone: false
         }
 
-        setRequestStatus('pending')
+        setIsLoading(true)
         const data = await dispatch(createTask(task)).unwrap()
         if (data.code) {
-            console.log('error creating task:', data.message)
+            dispatch(showMessage('There was an error creating your task.', 'error'))
         }
         else {
+            dispatch(showMessage('Your task was created successfully.', 'success'))
             navigate('/task/list')
         }
-        setRequestStatus('idle')
+        setIsLoading(false)
     }
 
-    const buttonContent = requestStatus === 'idle' ? 'Create' : <Spinner />
+    const buttonContent = !isLoading ? 'Create' : <Spinner />
 
     return (
         <>
