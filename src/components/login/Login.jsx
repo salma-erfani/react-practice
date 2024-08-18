@@ -5,20 +5,20 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import { useState } from "react"
 import LoginForm from "./LoginForm"
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { login } from "../../store/slices/userSlice"
 
 const Login = () => {
-
     const [username, setUsername] = useState('')
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
-    const passUsername = () => {
+    const handleLogin = () => {
         if (username.trim() !== '') {
-            localStorage.setItem('username', username.trim())
+            dispatch(login({ username: username.trim()}))
             navigate('/task/list')
         }
     }
-
-
 
     return (
         <>
@@ -33,7 +33,7 @@ const Login = () => {
                 iconTop={<CancelOutlinedIcon />}
                 iconBottom={<VisibilityOutlinedIcon />}
             />
-            <Button onClick={passUsername}>Login</Button>
+            <Button onClick={handleLogin}>Login</Button>
         </>
     )
 }

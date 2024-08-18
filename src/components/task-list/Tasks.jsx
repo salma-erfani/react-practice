@@ -4,15 +4,18 @@ import TaskList from "./TaskList"
 import Header from '../layout/Header'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../../store/slices/userSlice'
 
 
 const Tasks = () => {
     const navigate = useNavigate()
-    const username = localStorage.getItem('username')
+    const username = useSelector(state => state.user.username)
+    const dispatch = useDispatch()
 
     const handleLogout = () => {
-        localStorage.removeItem('username')
-        navigate('/login')
+        dispatch(logout())
+        // navigate('/login')
     }
 
     return (

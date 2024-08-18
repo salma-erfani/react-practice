@@ -20,7 +20,7 @@ const EditTask = () => {
     const [priority, setPriority] = useState('')  // low, medium, high
 
     const dispatch = useDispatch()
-    const [fetchStatus, setFetchStatus] = useState('idle')  // can be pending, success, failed
+    const [fetchStatus, setFetchStatus] = useState('idle')  // can be pending, success, failed, idle
     const [fetchError, setFetchError] = useState(null)
     const [isUpdating, setIsUpdating] = useState(false) 
     const [isDeleting, setIsDeleting] = useState(false) 
@@ -28,7 +28,7 @@ const EditTask = () => {
 
     useEffect(() => {
         const fetchTask = async () => {
-            setFetchStatus(true)
+            setFetchStatus('pending')
             const data = await dispatch(fetchTaskById(id)).unwrap()
             if (data.code) {
                 setFetchStatus('failed')
@@ -95,7 +95,7 @@ const EditTask = () => {
 
     let content = ''
 
-    if (fetchStatus === true) {
+    if (fetchStatus === 'pending') {
         content = <PageSpinner />
     }
 
