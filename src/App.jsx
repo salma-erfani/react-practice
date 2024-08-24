@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import Tasks from "./components/task-list/Tasks"
 import Layout from "./components/layout/Layout"
 import Login from "./components/login/Login"
-import EditTask from "./components/edit-task/EditTask"
+// import EditTask from "./components/edit-task/EditTask"
 import CreateTask from "./components/create-task/CreateTask"
 import { useSelector } from "react-redux"
 
@@ -19,7 +19,7 @@ const App = () => {
                     {isLoggedIn &&
                         <>
                             <Route path="task/list" element={<Tasks />} />
-                            <Route path="task/:id/edit" element={<EditTask />} />
+                            {/* <Route path="task/:id/edit" element={<EditTask />} /> */}
                             <Route path="task/create" element={<CreateTask />} />
                         </>
                     }

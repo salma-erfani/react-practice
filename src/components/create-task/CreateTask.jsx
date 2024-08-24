@@ -4,10 +4,10 @@ import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRig
 import CreateForm from "./CreateForm"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { useDispatch } from "react-redux"
-import { createTask } from "../../store/slices/taskSlice"
+import { useDispatch, useSelector } from "react-redux"
 import Spinner from "../utilities/Spinner"
 import { showMessage } from "../../store/slices/messageSlice"
+import { selectError, selectStatus } from "../../store/slices/taskSlice"
 
 const CreateTask = () => {
     const navigate = useNavigate()
@@ -15,6 +15,8 @@ const CreateTask = () => {
     const [title, setTitle] = useState('')
     const [priority, setPriority] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+    const status = useSelector(selectStatus)
+    const error = useSelector(selectError)
 
     const onClick = async () => {
         if (title.trim() === '' || priority === '') {
@@ -28,7 +30,7 @@ const CreateTask = () => {
         }
 
         setIsLoading(true)
-        const data = await dispatch(createTask(task)).unwrap()
+        const data = await dispatch({ type: 'CREATE_TASK', payload: { task } }).unwrap()
         if (data.code) {
             dispatch(showMessage('There was an error creating your task.', 'error'))
         }

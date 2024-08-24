@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
-import { updateTask } from "../../store/slices/taskSlice"
+// import { updateTask } from "../../store/slices/taskSlice"
 
 
 const TaskListItem = ({ task }) => {
@@ -10,12 +10,12 @@ const TaskListItem = ({ task }) => {
 
     const handleClickCheckbox = async () => {
         setChecked(prev => !prev)
-        const updatedTask = { id: task.id, isDone: !task.isDone }
+        // const updatedTask = { id: task.id, isDone: !task.isDone }
 
-        const data = await dispatch(updateTask(updatedTask)).unwrap()
-        if (data.code) {
-            console.log('error updating task:', data.message)
-        }
+        // const data = await dispatch(updateTask(updatedTask)).unwrap()
+        // if (data.code) {
+        //     console.log('error updating task:', data.message)
+        // }
     }
 
     return (

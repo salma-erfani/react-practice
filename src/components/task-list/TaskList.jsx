@@ -4,7 +4,7 @@ import EmptyTasks from "./EmptyTasks"
 import TaskListItem from "./TaskListItem"
 import { usePagination } from "../../hooks/usePagination"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchTasks, selectError, selectStatus, selectTasks, selectTotalPages } from "../../store/slices/taskSlice"
+import { selectError, selectStatus, selectTasks, selectTotalPages } from "../../store/slices/taskSlice"
 import PageSpinner from "../utilities/PageSpinner"
 
 const TaskList = () => {
@@ -27,7 +27,7 @@ const TaskList = () => {
     }
 
     useEffect(() => {
-        dispatch(fetchTasks({ page, perPage: pageSize }))
+        dispatch({ type: 'FETCH_TASKS', payload: { page, perPage: pageSize } })
     }, [page, pageSize])
 
     let content = ''
